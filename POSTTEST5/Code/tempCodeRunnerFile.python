@@ -1,0 +1,47 @@
+import random
+
+def ambil_kata():
+    kata_kunci = ["apel", "pisang", "jeruk", "mangga", "anggur", "semangka", "nanas", "durian", "stroberi", "pepaya"]
+    return random.choice(kata_kunci)
+
+def tampilkan_papan(kata, huruf_tertebak):
+    papan = ""
+    for huruf in kata:
+        if huruf in huruf_tertebak:
+            papan += huruf + " "
+        else:
+            papan += "_ "
+    return papan
+
+def main():
+    print("=== Selamat datang di Permainan Tebak Kata ===")
+    kata_rahasia = ambil_kata()
+    tebakan = []
+    kesempatan = 6
+
+    while kesempatan > 0:
+        papan = tampilkan_papan(kata_rahasia, tebakan)
+        print(f"Kata yang harus ditebak: {papan}")
+        tebakan_user = input("Tebak huruf atau kata: ").lower()
+
+        if tebakan_user == kata_rahasia:
+            print(f"Selamat! Anda berhasil menebak kata '{kata_rahasia}'!")
+            break
+        elif len(tebakan_user) == 1 and tebakan_user.isalpha():
+            if tebakan_user in tebakan:
+                print("Anda sudah menebak huruf ini sebelumnya.")
+            elif tebakan_user in kata_rahasia:
+                print("Tebakan benar!")
+                tebakan.append(tebakan_user)
+            else:
+                print("Tebakan salah. Anda kehilangan satu kesempatan.")
+                kesempatan -= 1
+                print(f"Kesempatan tersisa: {kesempatan}")
+        else:
+            print("Input tidak valid. Silakan masukkan satu huruf atau tebakan kata.")
+
+    else:
+        print(f"Anda kalah! Kata yang seharusnya ditebak adalah '{kata_rahasia}'.")
+
+if __name__ == "__main__":
+    main()
